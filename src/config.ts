@@ -5,18 +5,18 @@ import { pathToFileURL } from 'node:url'
 import { createJiti } from 'jiti'
 
 /**
- * User-facing configuration for the Blockbench test framework.
+ * User-facing configuration for Jestbench.
  *
  * Place a `blockbench.config.{ts,js,mjs,cjs,json}` file in your project root, or
  * point Jest at one with the `BLOCKBENCH_CONFIG` environment variable.
  */
-export interface BlockbenchTestConfig {
+export interface JestbenchConfig {
 	/**
 	 * Name of the envbench environment to run tests in. envbench keeps every
 	 * environment's `userData` folder isolated, so tests never touch your real
 	 * Blockbench install. Created automatically if it does not exist.
 	 *
-	 * @default "blockbench-plugin-test"
+	 * @default "jestbench"
 	 */
 	environment?: string
 	/**
@@ -87,7 +87,7 @@ export interface BlockbenchTestConfig {
 	verbose?: boolean
 }
 
-export type ResolvedConfig = Required<Omit<BlockbenchTestConfig, 'connect' | 'plugins'>> & {
+export type ResolvedConfig = Required<Omit<JestbenchConfig, 'connect' | 'plugins'>> & {
 	connect: string | undefined
 	plugins: string[]
 	/** Absolute path of the loaded config file, or `undefined` if defaults were used. */
@@ -95,7 +95,7 @@ export type ResolvedConfig = Required<Omit<BlockbenchTestConfig, 'connect' | 'pl
 }
 
 const DEFAULTS: Omit<ResolvedConfig, 'configPath' | 'plugins' | 'connect'> = {
-	environment: 'blockbench-plugin-test',
+	environment: 'jestbench',
 	blockbenchVersion: 'latest',
 	headless: true,
 	debugPort: 0,
@@ -116,7 +116,7 @@ const CONFIG_BASENAMES = [
 ]
 
 /** Identity helper that gives you autocomplete and type-checking in a config file. */
-export function defineConfig(config: BlockbenchTestConfig): BlockbenchTestConfig {
+export function defineConfig(config: JestbenchConfig): JestbenchConfig {
 	return config
 }
 
@@ -135,17 +135,17 @@ function findConfigFile(fromDir: string): string | undefined {
 	return undefined
 }
 
-async function importConfigModule(file: string): Promise<BlockbenchTestConfig> {
+async function importConfigModule(file: string): Promise<JestbenchConfig> {
 	if (file.endsWith('.json')) {
-		return JSON.parse(readFileSync(file, 'utf-8')) as BlockbenchTestConfig
+		return JSON.parse(readFileSync(file, 'utf-8')) as JestbenchConfig
 	}
 	// jiti handles .ts/.mjs/.cjs/.js and ESM/CJS interop, which matters because
 	// this file runs as CommonJS inside Jest's globalSetup.
 	const jiti = createJiti(pathToFileURL(file).href)
 	const mod = (await jiti.import(file)) as {
-		default?: BlockbenchTestConfig
-	} & BlockbenchTestConfig
-	return (mod?.default ?? mod) as BlockbenchTestConfig
+		default?: JestbenchConfig
+	} & JestbenchConfig
+	return (mod?.default ?? mod) as JestbenchConfig
 }
 
 /**

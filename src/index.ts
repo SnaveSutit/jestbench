@@ -13,7 +13,7 @@ import './matcher-types'
 
 export { defineConfig } from './config'
 export type { BlockbenchMatchers } from './matcher-types'
-export type { BlockbenchTestConfig, ResolvedConfig } from './config'
+export type { JestbenchConfig, ResolvedConfig } from './config'
 export type {
 	ActionHandle,
 	BlockbenchAPI,
@@ -33,8 +33,8 @@ function resolveApi(): BlockbenchAPI {
 	if (!api) {
 		throw new Error(
 			'The Blockbench test API is not available. Make sure your Jest config uses\n' +
-				'  preset: "blockbench-plugin-test"\n' +
-				'(or sets testEnvironment to "blockbench-plugin-test/environment"), and that\n' +
+				'  preset: "@snavesutit/jestbench"\n' +
+				'(or sets testEnvironment to "@snavesutit/jestbench/environment"), and that\n' +
 				'you are calling it from inside a test.',
 		)
 	}

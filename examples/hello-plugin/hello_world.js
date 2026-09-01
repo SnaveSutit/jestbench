@@ -11,7 +11,7 @@
 
 	BBPlugin.register('hello_world', {
 		title: 'Hello World',
-		author: 'blockbench-plugin-test',
+		author: 'jestbench',
 		description: 'Adds a friendly cube to your project.',
 		icon: 'waving_hand',
 		version: '1.0.0',

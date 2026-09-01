@@ -3,7 +3,7 @@
 
 /** @type {import('jest').Config} */
 export default {
-	preset: 'blockbench-plugin-test',
+	preset: '@snavesutit/jestbench',
 	rootDir: '.',
 	// Your project's TypeScript transform: ts-jest, babel-jest, @swc/jest, etc.
 	transform: {

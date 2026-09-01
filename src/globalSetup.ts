@@ -58,6 +58,6 @@ export default async function globalSetup(
 	writeState({ wsEndpoint: running.wsEndpoint, pid: running.pid, userDataDir, config })
 
 	if (config.verbose) {
-		console.log(`[blockbench-plugin-test] connected at ${running.wsEndpoint}`)
+		console.log(`[jestbench] connected at ${running.wsEndpoint}`)
 	}
 }

@@ -27,7 +27,7 @@ describe('defineConfig', () => {
 describe('loadConfig', () => {
 	it('falls back to defaults when no config file exists', async () => {
 		const cfg = await loadConfig(dir.path)
-		expect(cfg.environment).toBe('blockbench-plugin-test')
+		expect(cfg.environment).toBe('jestbench')
 		expect(cfg.blockbenchVersion).toBe('latest')
 		expect(cfg.headless).toBe(true)
 		expect(cfg.isolateTests).toBe(true)
@@ -73,7 +73,7 @@ describe('loadConfig', () => {
 			'export default { environment: undefined, blockbenchVersion: "5.0.0" }\n',
 		)
 		const cfg = await loadConfig(dir.path)
-		expect(cfg.environment).toBe('blockbench-plugin-test')
+		expect(cfg.environment).toBe('jestbench')
 		expect(cfg.blockbenchVersion).toBe('5.0.0')
 	})
 

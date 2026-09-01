@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals'
 
-import { blockbench, closeProject, gui, loadPlugin, newProject } from 'blockbench-plugin-test'
+import { blockbench, closeProject, gui, loadPlugin, newProject } from '@snavesutit/jestbench'
 
 // `hello_world.js` is preloaded via blockbench.config.mjs, so the plugin is
 // already running when the suite starts.

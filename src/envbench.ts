@@ -55,12 +55,12 @@ function downloadHooks() {
 	let lastShown = -1
 	return {
 		onDownloadStart: (version: string) =>
-			process.stderr.write(`[blockbench-plugin-test] downloading Blockbench ${version}\n`),
+			process.stderr.write(`[jestbench] downloading Blockbench ${version}\n`),
 		onProgress: ({ percent }: DownloadProgress) => {
 			const pct = Math.floor(percent * 10) * 10
 			if (pct > lastShown) {
 				lastShown = pct
-				process.stderr.write(`[blockbench-plugin-test]   ${pct}%\n`)
+				process.stderr.write(`[jestbench]   ${pct}%\n`)
 			}
 		},
 	}

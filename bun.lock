@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "blockbench-plugin-test",
+      "name": "@snavesutit/jestbench",
       "dependencies": {
         "envbench": "^4.1.0",
         "jest-environment-node": ">=29 <31",

@@ -36,8 +36,8 @@ export function readState(): SharedState {
 	const file = process.env[ENV_KEY]
 	if (!file) {
 		throw new Error(
-			'Blockbench test state not found. Make sure your Jest config extends ' +
-				'the "blockbench-plugin-test" preset (or wires up its globalSetup).',
+			'Jestbench state not found. Make sure your Jest config extends ' +
+				'the "@snavesutit/jestbench" preset (or wires up its globalSetup).',
 		)
 	}
 	return JSON.parse(readFileSync(file, 'utf-8')) as SharedState

@@ -4,7 +4,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 
 /**
- * `blockbench-plugin-test` is a Jest addon, so its end-to-end suite runs under
+ * Jestbench is a Jest addon, so its end-to-end suite runs under
  * Jest. This test drives that suite as a subprocess, so a single `bun test`
  * covers everything.
  *

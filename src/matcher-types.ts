@@ -1,6 +1,6 @@
 /**
  * Type-level registration of the custom matchers. Imported by the package entry
- * so that `import 'blockbench-plugin-test'` is enough to get matcher typings;
+ * so that `import '@snavesutit/jestbench'` is enough to get matcher typings;
  * the runtime `expect.extend` call lives in `matchers.ts`.
  */
 
