@@ -1,6 +1,6 @@
 <div align="center">
 
-# jestbench
+# 🃏 Jestbench
 
 **End-to-end tests for your [Blockbench](https://www.blockbench.net/) plugins.**
 
