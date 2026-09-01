@@ -1,5 +1,5 @@
 {
-	"name": "jestbench",
+	"name": "@snavesutit/jestbench",
 	"version": "0.1.0",
 	"description": "A Jest addon for writing end-to-end tests for Blockbench plugins - runs your plugin inside a real, isolated Blockbench instance and lets tests drive its API and GUI.",
 	"keywords": [
@@ -14,7 +14,7 @@
 	"author": "Titus Evans (SnaveSutit) <snavesutit@gmail.com>",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/SnaveSutit/blockbench-plugin-test"
+		"url": "https://github.com/SnaveSutit/jestbench"
 	},
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
