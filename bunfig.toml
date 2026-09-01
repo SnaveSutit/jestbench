@@ -1,0 +1,4 @@
+# Scope `bun test` to the unit-test suite. The end-to-end suite in
+# examples/hello-plugin runs under Jest (see `npm run test:example`).
+[test]
+root = "test"
