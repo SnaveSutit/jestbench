@@ -115,6 +115,11 @@ export async function launchBlockbench(
 	const child: ChildProcess = spawn(command, args, {
 		stdio: ['ignore', 'pipe', 'pipe'],
 		detached: true,
+		// Blockbench ships as an AppImage, which self-mounts through FUSE. Many
+		// CI images (e.g. GitHub's ubuntu-latest) have no libfuse, so tell the
+		// AppImage runtime to unpack to a temp dir instead. Ignored by anything
+		// that isn't an AppImage.
+		env: platform() === 'linux' ? { ...process.env, APPIMAGE_EXTRACT_AND_RUN: '1' } : process.env,
 	})
 
 	let log = ''
