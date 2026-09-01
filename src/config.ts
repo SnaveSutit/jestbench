@@ -20,9 +20,9 @@ export interface BlockbenchTestConfig {
 	 */
 	environment?: string
 	/**
-	 * Blockbench version to test against. Passed straight through to
-	 * `envbench create --version`. Accepts `"latest"`, `"beta"` or an exact
-	 * `"x.y.z"`. Pinning an exact version keeps CI runs reproducible.
+	 * Blockbench version to test against. Handed to envbench when it creates the
+	 * environment. Accepts `"latest"`, `"beta"` or an exact `"x.y.z"`. Pinning an
+	 * exact version keeps CI runs reproducible.
 	 *
 	 * @default "latest"
 	 */
@@ -83,8 +83,6 @@ export interface BlockbenchTestConfig {
 	 * @default true
 	 */
 	isolateTests?: boolean
-	/** Path/command for the envbench CLI. @default "envbench" */
-	envbenchBin?: string
 	/** Print Blockbench's stdout/stderr to the terminal. @default false */
 	verbose?: boolean
 }
@@ -106,7 +104,6 @@ const DEFAULTS: Omit<ResolvedConfig, 'configPath' | 'plugins' | 'connect'> = {
 	launchArgs: [],
 	keepAlive: false,
 	isolateTests: true,
-	envbenchBin: 'envbench',
 	verbose: false,
 }
 

@@ -45,6 +45,7 @@
 		"prepublishOnly": "bun run build"
 	},
 	"dependencies": {
+		"envbench": "^4.1.0",
 		"jest-environment-node": ">=29 <31",
 		"jiti": "^2.7.0",
 		"puppeteer-core": "^23.11.1"

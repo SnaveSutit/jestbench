@@ -2,7 +2,7 @@ import { BlockbenchAPI } from './api'
 import { Bridge } from './bridge'
 import { loadConfig, type ResolvedConfig } from './config'
 import { connectExisting, launchBlockbench, type RunningBlockbench } from './launcher'
-import { ensureEnvironment, environmentDir, resolvePortablePath } from './envbench'
+import { createEnvbench, ensureEnvironment, environmentDir, resolvePortablePath } from './envbench'
 import { writeState } from './state'
 
 // Kept on the module so globalTeardown (same process) can reach it.
@@ -45,12 +45,10 @@ export default async function globalSetup(
 	if (config.connect) {
 		running = await connectExisting(config.connect)
 	} else {
-		await ensureEnvironment(config.environment, config.blockbenchVersion, {
-			bin: config.envbenchBin,
-			verbose: config.verbose,
-		})
-		userDataDir = environmentDir(config.environment)
-		const executable = await resolvePortablePath(config.environment)
+		const eb = createEnvbench()
+		await ensureEnvironment(eb, config.environment, config.blockbenchVersion)
+		userDataDir = environmentDir(eb, config.environment)
+		const executable = await resolvePortablePath(eb, config.environment)
 		running = await launchBlockbench(executable, userDataDir, config)
 	}
 

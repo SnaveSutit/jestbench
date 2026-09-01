@@ -53,21 +53,21 @@ describe('my plugin', () => {
 
 ## Requirements
 
-|                                                        |                                                                                                        |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| **Node**                                               | 20 or newer                                                                                            |
-| **Jest**                                               | 29 or 30                                                                                               |
-| **[envbench](https://github.com/SnaveSutit/envbench)** | `npm i -g envbench` — provisions the isolated Blockbench install                                       |
-| **Headless runs**                                      | Linux with `xvfb-run` on `PATH`. Elsewhere (or with `headless: false`) Blockbench opens a real window. |
+|                   |                                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------ |
+| **Node**          | 20 or newer                                                                                            |
+| **Jest**          | 29 or 30                                                                                               |
+| **Headless runs** | Linux with `xvfb-run` on `PATH`. Elsewhere (or with `headless: false`) Blockbench opens a real window. |
 
-The first test run downloads Blockbench (~120 MB) through envbench; later runs
+[envbench](https://github.com/SnaveSutit/envbench) is bundled as a dependency —
+it provisions the isolated Blockbench install and its per-environment `userData`
+folder. The first test run downloads Blockbench (~120 MB) through it; later runs
 reuse it.
 
 ## Install
 
 ```bash
 npm i -D blockbench-plugin-test jest
-npm i -g envbench
 ```
 
 ## Setup
@@ -135,7 +135,7 @@ Run `jest` as usual.
 
 | Option              | Default                    | Description                                                                                 |
 | ------------------- | -------------------------- | ------------------------------------------------------------------------------------------- |
-| `blockbenchVersion` | `"latest"`                 | Passed to `envbench create --version`. `"latest"`, `"beta"`, or `"x.y.z"`.                  |
+| `blockbenchVersion` | `"latest"`                 | Blockbench version envbench provisions. `"latest"`, `"beta"`, or `"x.y.z"`.                 |
 | `environment`       | `"blockbench-plugin-test"` | envbench environment name.                                                                  |
 | `plugins`           | `[]`                       | Plugin `.js` files to preload, resolved relative to the config file.                        |
 | `headless`          | `true`                     | Run through `xvfb-run` with no window (Linux).                                              |
@@ -146,7 +146,6 @@ Run `jest` as usual.
 | `connect`           | –                          | `ws://…` or `http://…` DevTools endpoint of an already-running Blockbench. Skips launching. |
 | `keepAlive`         | `false`                    | Leave Blockbench running after the suite (debugging).                                       |
 | `isolateTests`      | `true`                     | After each test, unload plugins that the test loaded and close the active project.          |
-| `envbenchBin`       | `"envbench"`               | Path/command for the envbench CLI.                                                          |
 | `verbose`           | `false`                    | Print Blockbench's stdout/stderr.                                                           |
 
 ## API
@@ -237,7 +236,7 @@ await expect(gui.action('gone')).not.toExist()
 
 ```
  Jest globalSetup ─┐
-                   ├─ envbench create   → isolated Blockbench + userData
+                   ├─ envbench (library)  → isolated Blockbench + userData
                    ├─ launch Blockbench  --remote-debugging-port  (under xvfb-run)
                    └─ preload your plugins over the DevTools bridge
         │
@@ -253,14 +252,14 @@ separate `userData` folder per environment.
 
 ## Troubleshooting
 
-| Symptom                                                | Fix                                                                                                                                                                                     |
-| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Could not run "envbench"`                             | `npm i -g envbench`, or set `envbenchBin` in the config.                                                                                                                                |
-| `Timed out … waiting for Blockbench to start`          | Headless Linux needs `xvfb-run` on `PATH`. In containers you may also need `--no-sandbox` (already passed) and a writable `/tmp`. Bump `launchTimeout` for the first (downloading) run. |
-| `Failed to load plugin … is the file named "<id>.js"?` | Blockbench derives the plugin id from the **file name**. `my_plugin.js` must call `Plugin.register('my_plugin')`.                                                                       |
-| Tests interfere with each other                        | Keep `maxWorkers: 1` (the preset sets it). `isolateTests` cleans up between tests; disable it only if you manage state yourself.                                                        |
-| Matcher is "not a function" / no types                 | Import Jest globals from `@jest/globals`, and make sure the run goes through the preset (not a bare `jest` with no config).                                                             |
-| Want to watch it run                                   | `headless: false` (opens a real window) and/or `keepAlive: true`.                                                                                                                       |
+| Symptom                                                  | Fix                                                                                                                                                                                     |
+| -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Could not determine which Blockbench version to launch` | The first run needs network access to resolve `"latest"`/`"beta"` and download Blockbench. Pin an exact `blockbenchVersion` for offline CI with a warm `~/.envbench` cache.             |
+| `Timed out … waiting for Blockbench to start`            | Headless Linux needs `xvfb-run` on `PATH`. In containers you may also need `--no-sandbox` (already passed) and a writable `/tmp`. Bump `launchTimeout` for the first (downloading) run. |
+| `Failed to load plugin … is the file named "<id>.js"?`   | Blockbench derives the plugin id from the **file name**. `my_plugin.js` must call `Plugin.register('my_plugin')`.                                                                       |
+| Tests interfere with each other                          | Keep `maxWorkers: 1` (the preset sets it). `isolateTests` cleans up between tests; disable it only if you manage state yourself.                                                        |
+| Matcher is "not a function" / no types                   | Import Jest globals from `@jest/globals`, and make sure the run goes through the preset (not a bare `jest` with no config).                                                             |
+| Want to watch it run                                     | `headless: false` (opens a real window) and/or `keepAlive: true`.                                                                                                                       |
 
 ## Example
 
