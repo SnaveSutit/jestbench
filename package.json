@@ -1,6 +1,6 @@
 {
 	"name": "@snavesutit/jestbench",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "A Jest addon for writing end-to-end tests for Blockbench plugins - runs your plugin inside a real, isolated Blockbench instance and lets tests drive its API and GUI.",
 	"keywords": [
 		"blockbench",
