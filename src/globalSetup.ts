@@ -1,7 +1,8 @@
-import { BlockbenchAPI } from './api'
+import { BlockbenchAPI, pluginIdFromPath } from './api'
 import { Bridge } from './bridge'
 import { loadConfig, type ResolvedConfig } from './config'
 import { connectExisting, launchBlockbench, type RunningBlockbench } from './launcher'
+import { grantPluginPermissions } from './permissions'
 import { createEnvbench, ensureEnvironment, environmentDir, resolvePortablePath } from './envbench'
 import { writeState } from './state'
 
@@ -49,6 +50,7 @@ export default async function globalSetup(
 		await ensureEnvironment(eb, config.environment, config.blockbenchVersion)
 		userDataDir = environmentDir(eb, config.environment)
 		const executable = await resolvePortablePath(eb, config.environment)
+		grantPluginPermissions(userDataDir, config.plugins.map(pluginIdFromPath))
 		running = await launchBlockbench(executable, userDataDir, config)
 	}
 

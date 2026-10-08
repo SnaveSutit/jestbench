@@ -133,20 +133,20 @@ Run `jest` as usual.
 
 ## Configuration
 
-| Option              | Default        | Description                                                                                 |
-| ------------------- | -------------- | ------------------------------------------------------------------------------------------- |
-| `blockbenchVersion` | `"latest"`     | Blockbench version envbench provisions. `"latest"`, `"beta"`, or `"x.y.z"`.                 |
-| `environment`       | `"jestbench"`  | envbench environment name.                                                                  |
-| `plugins`           | `[]`           | Plugin `.js` files to preload, resolved relative to the config file.                        |
-| `headless`          | `true`         | Run through `xvfb-run` with no window (Linux).                                              |
-| `launchTimeout`     | `60000`        | Milliseconds to wait for Blockbench to boot.                                                |
-| `debugPort`         | `0`            | Fixed CDP port; `0` picks a free one.                                                       |
-| `launchArgs`        | `[]`           | Extra CLI arguments for the Blockbench executable.                                          |
-| `readyExpression`   | _(boot check)_ | JS expression evaluated in the renderer to decide when Blockbench is ready.                 |
-| `connect`           | –              | `ws://…` or `http://…` DevTools endpoint of an already-running Blockbench. Skips launching. |
-| `keepAlive`         | `false`        | Leave Blockbench running after the suite (debugging).                                       |
-| `isolateTests`      | `true`         | After each test, unload plugins that the test loaded and close the active project.          |
-| `verbose`           | `false`        | Print Blockbench's stdout/stderr.                                                           |
+| Option              | Default        | Description                                                                                                                                                  |
+| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `blockbenchVersion` | `"latest"`     | Blockbench version envbench provisions. `"latest"`, `"beta"`, or `"x.y.z"`.                                                                                  |
+| `environment`       | `"jestbench"`  | envbench environment name.                                                                                                                                   |
+| `plugins`           | `[]`           | Plugin `.js` files to preload, resolved relative to the config file. Each gets every Blockbench permission up front, so no permission prompt blocks the run. |
+| `headless`          | `true`         | Run through `xvfb-run` with no window (Linux).                                                                                                               |
+| `launchTimeout`     | `60000`        | Milliseconds to wait for Blockbench to boot.                                                                                                                 |
+| `debugPort`         | `0`            | Fixed CDP port; `0` picks a free one.                                                                                                                        |
+| `launchArgs`        | `[]`           | Extra CLI arguments for the Blockbench executable.                                                                                                           |
+| `readyExpression`   | _(boot check)_ | JS expression evaluated in the renderer to decide when Blockbench is ready.                                                                                  |
+| `connect`           | –              | `ws://…` or `http://…` DevTools endpoint of an already-running Blockbench. Skips launching.                                                                  |
+| `keepAlive`         | `false`        | Leave Blockbench running after the suite (debugging).                                                                                                        |
+| `isolateTests`      | `true`         | After each test, unload plugins that the test loaded and close the active project.                                                                           |
+| `verbose`           | `false`        | Print Blockbench's stdout/stderr.                                                                                                                            |
 
 ## API
 
