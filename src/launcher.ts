@@ -94,7 +94,10 @@ export async function launchBlockbench(
 	const bbArgs = [
 		`--remote-debugging-port=${port}`,
 		'--remote-allow-origins=*',
-		`--userData=${userDataDir}`,
+		// Blockbench only reads the space-separated form; `--userData=<dir>` is
+		// silently ignored and falls back to the user's real profile.
+		'--userData',
+		userDataDir,
 		// The AppImage re-execs itself for sandboxed child processes, which many
 		// CI sandboxes disallow; --no-sandbox keeps it to one process tree.
 		// Do not add --disable-gpu: Blockbench needs a working WebGL context to
@@ -119,7 +122,10 @@ export async function launchBlockbench(
 		// CI images (e.g. GitHub's ubuntu-latest) have no libfuse, so tell the
 		// AppImage runtime to unpack to a temp dir instead. Ignored by anything
 		// that isn't an AppImage.
-		env: platform() === 'linux' ? { ...process.env, APPIMAGE_EXTRACT_AND_RUN: '1' } : process.env,
+		env:
+			platform() === 'linux'
+				? { ...process.env, APPIMAGE_EXTRACT_AND_RUN: '1' }
+				: process.env,
 	})
 
 	let log = ''
